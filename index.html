@@ -169,6 +169,10 @@ p{text-wrap:pretty}
   .when{width:100%;gap:14px;padding:12px 16px 12px 12px}
   .when__tile{width:66px}
   .when__tile .d{font-size:32px}
+  .when__txt b{font-size:17px;white-space:nowrap}
+}
+@media(max-width:350px){
+  .when__txt b{white-space:normal}
   .when__txt .w{font-size:13px}
   .feat{border-radius:var(--r);padding-right:16px}
   .cobrand .delta{height:32px}
@@ -496,7 +500,7 @@ p{text-wrap:pretty}
 const EVENT = {
   title: "Black Friday Buyers to Lifetime Subscribers — Delta Connect × Shopify",
   dateLabel: "Wed 4 November 2026",
-  dateLong: "Wednesday 4 November",     // date block in the hero
+  dateLong: "Wednesday 4th of November", // date block in the hero
   monthShort: "Nov",
   dayNum: "4",
   startISO: "2026-11-04T14:00:00Z",   // 2pm UK (GMT in November) — drives the countdown
