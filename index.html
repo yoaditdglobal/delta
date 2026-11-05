@@ -85,14 +85,6 @@ p{text-wrap:pretty}
 .live i,.with-shopify .dot{width:8px;height:8px;border-radius:50%;flex:none;animation:pulse 2.4s var(--ease) infinite}
 .live i{background:#06210f;box-shadow:0 0 0 3px rgba(6,33,15,.18)}
 
-/* header right side: partner logos + recording button */
-.hero__right{display:flex;align-items:center;gap:clamp(18px,2.4vw,30px)}
-.recbtn{display:inline-flex;align-items:center;gap:10px;padding:8px 18px 8px 8px;border-radius:999px;background:var(--grad);color:#06210f;font:600 15px/1 var(--display);letter-spacing:-.01em;white-space:nowrap;box-shadow:0 10px 26px -12px rgba(43,124,255,.6);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
-.recbtn:hover{transform:translateY(-2px);box-shadow:0 16px 32px -12px rgba(43,124,255,.7)}
-.recbtn__ic{width:30px;height:30px;border-radius:50%;background:#06210f;display:grid;place-items:center;flex:none}
-.recbtn__ic svg{width:13px;height:13px;fill:#fff;margin-left:2px}
-@media(max-width:1180px){.hero__right .cobrand .lab{display:none}}
-@media(max-width:980px){.hero__right .cobrand{display:none}}
 
 /* recording pop-up player */
 .vmodal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:16px}
@@ -361,17 +353,11 @@ body.vmodal-open{overflow:hidden}
       <span class="nm">Delta <b>Connect</b></span>
       <span class="live"><i></i>Live</span>
     </div>
-    <div class="hero__right">
-      <div class="cobrand" aria-label="Delta Fulfilment and Shopify">
-        <span class="lab">In partnership</span>
-        <img class="delta" src="assets/logo-light.png" alt="Delta Fulfilment">
-        <span class="x" aria-hidden="true">×</span>
-        <img class="shop" src="assets/shopify-logo-white.png" alt="Shopify">
-      </div>
-      <!-- Opens the YouTube recording in a pop-up player; without JS it goes to YouTube -->
-      <a class="recbtn" href="https://youtu.be/XalmMT-G61I" data-video="XalmMT-G61I" target="_blank" rel="noopener">
-        <span class="recbtn__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>Watch the recording
-      </a>
+    <div class="cobrand" aria-label="Delta Fulfilment and Shopify">
+      <span class="lab">In partnership</span>
+      <img class="delta" src="assets/logo-light.png" alt="Delta Fulfilment">
+      <span class="x" aria-hidden="true">×</span>
+      <img class="shop" src="assets/shopify-logo-white.png" alt="Shopify">
     </div>
   </div>
 
