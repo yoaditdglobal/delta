@@ -171,6 +171,14 @@ body.vmodal-open{overflow:hidden}
 .steps b{display:block;font:600 17px/1.25 var(--display);letter-spacing:-.01em}
 .steps span:not(.steps__n){display:block;margin-top:2px;font-size:14.5px;color:var(--ink-2);line-height:1.4}
 .regpanel__btn{width:100%;margin-top:24px}
+.recthumb{position:relative;display:block;aspect-ratio:16/9;border-radius:var(--r);overflow:hidden;background:#000;margin-bottom:22px;box-shadow:var(--shadow-sm)}
+.recthumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.recthumb:hover img{transform:scale(1.04)}
+.recthumb::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,19,27,.45),transparent 55%)}
+.recthumb__play{position:absolute;left:50%;top:50%;z-index:1;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:var(--grad);display:grid;place-items:center;box-shadow:0 12px 30px -10px rgba(43,124,255,.7);transition:transform .25s var(--ease)}
+.recthumb:hover .recthumb__play{transform:scale(1.08)}
+.recthumb__play svg{width:24px;height:24px;fill:#06210f;margin-left:3px}
+.recthumb__len{position:absolute;right:10px;bottom:10px;z-index:1;font:500 12px/1 var(--mono);letter-spacing:.06em;color:#fff;background:rgba(8,11,16,.7);padding:5px 8px;border-radius:6px}
 .form-foot{margin-top:12px;text-align:center;font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-3)}
 
 @media(max-width:920px){
@@ -377,7 +385,7 @@ body.vmodal-open{overflow:hidden}
         <div class="when__txt">
           <b data-ev="long"></b>
           <span class="t"><span data-ev="time"></span> <em>UK time</em></span>
-          <span class="w"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg> Live on Microsoft Teams · Free</span>
+          <span class="w"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg> Recorded live · Watch free on demand</span>
         </div>
       </div>
       <div class="feat">
@@ -398,19 +406,22 @@ body.vmodal-open{overflow:hidden}
     <div class="formcard" id="register">
       <div class="formcard__head">
         <span class="formcard__kick">Delta Connect × Shopify</span>
-        <h2 class="formcard__title">Save your spot. <b>It's free.</b></h2>
+        <h2 class="formcard__title">Missed it? <b>Watch the recording.</b></h2>
       </div>
-      <!-- Registration runs on Luma (approval on). Every register button carries data-luma-action="checkout"
-           plus the event id, which makes Luma's script open its form as a pop-up over this page.
-           Without JS the button falls back to the Luma event page. -->
+      <!-- The webinar has happened: this card now plays the recording (pop-up player, see data-video) -->
       <div class="regpanel">
+        <a class="recthumb" href="https://youtu.be/XalmMT-G61I" data-video="XalmMT-G61I" target="_blank" rel="noopener" aria-label="Play the webinar recording">
+          <img src="https://i.ytimg.com/vi/XalmMT-G61I/maxresdefault.jpg" alt="" loading="lazy">
+          <span class="recthumb__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <span class="recthumb__len">46 min</span>
+        </a>
         <ol class="steps">
-          <li><span class="steps__n">1</span><div><b>Register in under a minute</b><span>Name, email and company. That's it.</span></div></li>
-          <li><span class="steps__n">2</span><div><b>We confirm your place</b><span>The Delta team reviews every registration.</span></div></li>
-          <li><span class="steps__n">3</span><div><b>Get your joining link</b><span>We email your Teams link and a calendar invite.</span></div></li>
+          <li><span class="steps__n">1</span><div><b>What Shopify is seeing this peak</b><span>Real data from Hannah Johnson, Shopify.</span></div></li>
+          <li><span class="steps__n">2</span><div><b>Keeping Black Friday customers</b><span>Turning one-off buyers into subscribers.</span></div></li>
+          <li><span class="steps__n">3</span><div><b>Live Q&amp;A</b><span>The questions brands asked on the day.</span></div></li>
         </ol>
-        <a class="btn btn--grad btn--lg regpanel__btn" data-luma-action="checkout" data-luma-event-id="evt-slx1Rl5kYydiwJX" href="https://luma.com/91oz6jq6" target="_blank" rel="noopener">Register free <span class="arr">→</span></a>
-        <p class="form-foot">Free · Online · Microsoft Teams</p>
+        <a class="btn btn--grad btn--lg regpanel__btn" href="https://youtu.be/XalmMT-G61I" data-video="XalmMT-G61I" target="_blank" rel="noopener">▶ Watch the recording</a>
+        <p class="form-foot">Free · On demand · 46 minutes</p>
       </div>
     </div>
   </div>
@@ -490,8 +501,8 @@ body.vmodal-open{overflow:hidden}
   <div class="container">
     <svg class="fcta__mk reveal" viewBox="0 0 128 68" style="--mi:#fff" aria-hidden="true"><use href="#link"/></svg>
     <h2 class="h-lg reveal">Make this peak your <span class="g">best subscriber season.</span></h2>
-    <p class="reveal">Free, online and live. Can't make it? Register anyway and we'll send you the recording.</p>
-    <a href="https://luma.com/91oz6jq6" data-luma-action="checkout" data-luma-event-id="evt-slx1Rl5kYydiwJX" target="_blank" rel="noopener" class="btn btn--grad btn--lg reveal">Save my spot <span class="arr">→</span></a>
+    <p class="reveal">Missed the live session? Catch up on the full recording, free and on demand.</p>
+    <a href="https://youtu.be/XalmMT-G61I" data-video="XalmMT-G61I" target="_blank" rel="noopener" class="btn btn--grad btn--lg reveal">▶ Watch the recording</a>
     <div class="cobrand reveal" aria-label="Delta Fulfilment and Shopify">
       <img class="delta" src="assets/logo-light.png" alt="Delta Fulfilment">
       <span class="x" aria-hidden="true">×</span>
@@ -502,8 +513,8 @@ body.vmodal-open{overflow:hidden}
 </main>
 
 <div class="stickybar off" id="stickybar">
-  <div class="stickybar__txt"><b>Delta Connect Live</b><span><span data-ev="short"></span> · <span data-ev="time"></span></span></div>
-  <a href="https://luma.com/91oz6jq6" data-luma-action="checkout" data-luma-event-id="evt-slx1Rl5kYydiwJX" target="_blank" rel="noopener" class="btn btn--grad">Register free</a>
+  <div class="stickybar__txt"><b>Delta Connect Live</b><span>Recording now available</span></div>
+  <a href="https://youtu.be/XalmMT-G61I" data-video="XalmMT-G61I" target="_blank" rel="noopener" class="btn btn--grad">▶ Watch now</a>
 </div>
 
 <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-label="Webinar recording" hidden>
@@ -545,8 +556,8 @@ const EVENT = {
   startISO: "2026-11-04T14:00:00Z",   // 2pm UK (GMT in November) — drives the countdown
   timeLabel: "2pm – 3pm"              // "UK time" is added next to it on the page
 };
-// Registration, approval and the joining-link emails are handled by Luma: https://luma.com/91oz6jq6
-// (event id evt-slx1Rl5kYydiwJX on each register button). The Teams link is never on this page.
+// The webinar has happened; every "watch" button (data-video) opens the recording in the pop-up player.
+// Registration used to run on Luma (https://luma.com/91oz6jq6) and has been removed from the page.
 
 (function(){
   const fill = {date:EVENT.dateLabel, time:EVENT.timeLabel, long:EVENT.dateLong, mon:EVENT.monthShort, day:EVENT.dayNum,
@@ -610,7 +621,5 @@ const EVENT = {
   });
 })();
 </script>
-<!-- Luma registration pop-up (the id is required: the script reads its own origin from it) -->
-<script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script>
 </body>
 </html>
