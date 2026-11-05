@@ -85,6 +85,25 @@ p{text-wrap:pretty}
 .live i,.with-shopify .dot{width:8px;height:8px;border-radius:50%;flex:none;animation:pulse 2.4s var(--ease) infinite}
 .live i{background:#06210f;box-shadow:0 0 0 3px rgba(6,33,15,.18)}
 
+/* header right side: partner logos + recording button */
+.hero__right{display:flex;align-items:center;gap:clamp(18px,2.4vw,30px)}
+.recbtn{display:inline-flex;align-items:center;gap:10px;padding:8px 18px 8px 8px;border-radius:999px;background:var(--grad);color:#06210f;font:600 15px/1 var(--display);letter-spacing:-.01em;white-space:nowrap;box-shadow:0 10px 26px -12px rgba(43,124,255,.6);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.recbtn:hover{transform:translateY(-2px);box-shadow:0 16px 32px -12px rgba(43,124,255,.7)}
+.recbtn__ic{width:30px;height:30px;border-radius:50%;background:#06210f;display:grid;place-items:center;flex:none}
+.recbtn__ic svg{width:13px;height:13px;fill:#fff;margin-left:2px}
+@media(max-width:1180px){.hero__right .cobrand .lab{display:none}}
+@media(max-width:980px){.hero__right .cobrand{display:none}}
+
+/* recording pop-up player */
+.vmodal{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:16px}
+.vmodal__scrim{position:absolute;inset:0;background:rgba(6,9,14,.82);backdrop-filter:blur(6px)}
+.vmodal__wrap{position:relative;width:min(1040px,100%)}
+.vmodal__box{width:100%;aspect-ratio:16/9;border-radius:var(--r-lg);overflow:hidden;background:#000;box-shadow:var(--shadow-lg)}
+.vmodal__box iframe{width:100%;height:100%;border:0;display:block}
+.vmodal__x{position:absolute;top:-52px;right:0;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;cursor:pointer}
+.vmodal__x svg{width:16px;height:16px;stroke:#fff;stroke-width:2.4;fill:none;stroke-linecap:round}
+body.vmodal-open{overflow:hidden}
+
 /* co-brand lockup */
 .cobrand{display:flex;align-items:center;gap:clamp(12px,2vw,18px)}
 .cobrand .lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5)}
@@ -334,11 +353,17 @@ p{text-wrap:pretty}
       <span class="nm">Delta <b>Connect</b></span>
       <span class="live"><i></i>Live</span>
     </div>
-    <div class="cobrand" aria-label="Delta Fulfilment and Shopify">
-      <span class="lab">In partnership</span>
-      <img class="delta" src="assets/logo-light.png" alt="Delta Fulfilment">
-      <span class="x" aria-hidden="true">×</span>
-      <img class="shop" src="assets/shopify-logo-white.png" alt="Shopify">
+    <div class="hero__right">
+      <div class="cobrand" aria-label="Delta Fulfilment and Shopify">
+        <span class="lab">In partnership</span>
+        <img class="delta" src="assets/logo-light.png" alt="Delta Fulfilment">
+        <span class="x" aria-hidden="true">×</span>
+        <img class="shop" src="assets/shopify-logo-white.png" alt="Shopify">
+      </div>
+      <!-- Opens the YouTube recording in a pop-up player; without JS it goes to YouTube -->
+      <a class="recbtn" href="https://youtu.be/XalmMT-G61I" data-video="XalmMT-G61I" target="_blank" rel="noopener">
+        <span class="recbtn__ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>Watch the recording
+      </a>
     </div>
   </div>
 
@@ -481,6 +506,14 @@ p{text-wrap:pretty}
   <a href="https://luma.com/91oz6jq6" data-luma-action="checkout" data-luma-event-id="evt-slx1Rl5kYydiwJX" target="_blank" rel="noopener" class="btn btn--grad">Register free</a>
 </div>
 
+<div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-label="Webinar recording" hidden>
+  <div class="vmodal__scrim" data-vclose></div>
+  <div class="vmodal__wrap">
+    <button class="vmodal__x" type="button" data-vclose aria-label="Close video"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="vmodal__box" id="vmodalBox"></div>
+  </div>
+</div>
+
 <footer class="foot">
   <div class="container">
     <div class="dc-lockup" aria-label="Delta Connect">
@@ -545,6 +578,27 @@ const EVENT = {
     bar.classList.toggle('off', seen.size > 0);
   });
   watch.forEach(el=>barIO.observe(el));
+
+  /* recording pop-up: the YouTube player is only created when opened, and removed on close to stop playback */
+  const vm = document.getElementById('vmodal');
+  const vbox = document.getElementById('vmodalBox');
+  let lastFocus = null;
+  function openVideo(id){
+    lastFocus = document.activeElement;
+    vbox.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" title="Delta Connect Live recording" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    vm.hidden = false;
+    document.body.classList.add('vmodal-open');
+    vm.querySelector('.vmodal__x').focus();
+  }
+  function closeVideo(){
+    vm.hidden = true;
+    vbox.innerHTML = '';
+    document.body.classList.remove('vmodal-open');
+    if(lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-video]').forEach(a=>a.addEventListener('click', e=>{ e.preventDefault(); openVideo(a.dataset.video); }));
+  vm.querySelectorAll('[data-vclose]').forEach(el=>el.addEventListener('click', closeVideo));
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && !vm.hidden) closeVideo(); });
 
   /* scroll reveal */
   const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12, rootMargin:'0px 0px -8% 0px'});
